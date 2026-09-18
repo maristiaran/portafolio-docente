@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unidad 2: Funcionamiento de un Sistema Operativo — SO1</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site-header">
+    <a class="brand" href="../../index.html">Portafolio Docente</a>
+    <nav class="top-nav">
+      <a href="index.html">SO1</a>
+      <a href="https://github.com/maristiaran/portafolio-docente" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="breadcrumb"><a href="../../index.html">Inicio</a> / <a href="index.html">Sistemas Operativos 1</a> / Unidad 2</p>
+
+  <h1>Unidad 2: Funcionamiento de un Sistema Operativo</h1>
+  <p class="lead">Apuntes de cátedra — Tecnicatura Superior en Desarrollo de Software, Sistemas Operativos 1.</p>
+
+  <h2>Índice</h2>
+  <ul class="toc">
+    <li><a href="#s1">1. Introducción a los Sistemas Operativos</a>
+      <ul>
+        <li><a href="#s1-1">1.1 Sentido amplio y estricto</a></li>
+        <li><a href="#s1-2">1.2 Roles y funciones del Sistema Operativo</a></li>
+        <li><a href="#s1-3">1.3 Espacios del Kernel y de Usuario</a></li>
+        <li><a href="#s1-4">1.4 Tipos de Sistemas Operativos</a></li>
+      </ul>
+    </li>
+    <li><a href="#s2">2. Comunicación entre el SO, los procesos, el hardware y el procesador</a>
+      <ul>
+        <li><a href="#s2-1">2.1 Las interrupciones</a></li>
+        <li><a href="#s2-2">2.2 Tipos de interrupciones</a></li>
+        <li><a href="#s2-3">2.3 Llamadas al sistema</a></li>
+      </ul>
+    </li>
+    <li><a href="#s3">3. Proceso de arranque</a></li>
+    <li><a href="#s4">4. Gestión de Entrada/Salida y de Memoria</a>
+      <ul>
+        <li><a href="#s4-1">4.1 Gestión de Entrada/Salida</a></li>
+        <li><a href="#s4-2">4.2 Gestión de Memoria</a></li>
+      </ul>
+    </li>
+    <li><a href="#s5">5. Gestión de Procesos</a></li>
+  </ul>
+
+  <!-- ============ 1 ============ -->
+  <h2 id="s1">1. Introducción a los Sistemas Operativos</h2>
+
+  <h3 id="s1-1">1.1 Sistema Operativo en sentido amplio y en sentido estricto</h3>
+  <p>El término "sistema operativo" puede entenderse de dos formas principales, dependiendo del nivel de detalle y del contexto en que se utilice.</p>
+
+  <h4>1.1.1 Definición amplia y habitual</h4>
+  <p>En su concepción más general, un sistema operativo incluye no solo el núcleo (kernel), sino también un conjunto más amplio de herramientas, utilidades y aplicaciones que permiten a los usuarios interactuar de manera efectiva con el hardware y los recursos del sistema. Esto abarca componentes como administradores de archivos, intérpretes de comandos (shells), sistemas de archivos, bibliotecas estándar, configuradores como paneles de control, y utilidades adicionales como terminales, editores de texto y otros programas que forman parte del entorno del sistema operativo. En este sentido, el sistema operativo es visto como un conjunto de aplicaciones accesibles al usuario, que le proporcionan una experiencia completa para la interacción con su equipo.</p>
+
+  <h4>1.1.2 Definición técnica y estricta</h4>
+  <p>Desde un enfoque más técnico, el término "sistema operativo" se refiere exclusivamente al núcleo (kernel), que es el componente más fundamental y esencial del software del sistema. Este núcleo opera de manera invisible para el usuario, ya que no es algo con lo que se interactúe directamente, sino que es el intermediario entre el hardware y las aplicaciones o procesos. El núcleo se encarga de tareas críticas como la gestión de la memoria, la asignación de tiempo de procesador, la comunicación entre procesos y el acceso a los dispositivos de hardware. Por tanto, el usuario no lo percibe directamente, pero su correcto funcionamiento es vital para que las aplicaciones puedan ejecutarse y brindar los servicios que el usuario utiliza.</p>
+
+  <div class="callout">En el resto de estos apuntes, el término "sistema operativo" hace referencia a la definición más técnica, es decir, al núcleo o kernel. Cuando sea necesario referirse al concepto más amplio, se indicará de manera explícita para evitar confusiones.</div>
+
+  <h3 id="s1-2">1.2 Roles y funciones del Sistema Operativo</h3>
+  <p>El sistema operativo cumple dos roles esenciales que están estrechamente relacionados con sus funciones principales.</p>
+
+  <h4>1.2.1 Administrador de Recursos</h4>
+  <p>El sistema operativo actúa como un referee o árbitro entre las aplicaciones (o procesos) que compiten por los recursos del sistema. Esto es fundamental para garantizar que los recursos, como la CPU, la memoria y los dispositivos de entrada/salida, sean gestionados de manera eficiente y sin conflictos. Por ejemplo, cuando dos procesos necesitan utilizar la impresora, el sistema operativo se encarga de decidir cuál tendrá acceso primero, informando al segundo proceso que debe esperar a que la impresora se desocupe. De manera similar, si un proceso solicita más memoria RAM, el sistema operativo verifica qué direcciones de memoria están disponibles, asigna la memoria solicitada, y registra esa asignación para poder reutilizarla posteriormente cuando sea necesario. Esta capacidad de gestionar y coordinar los recursos asegura que múltiples aplicaciones puedan ejecutarse simultáneamente sin interferencias.</p>
+
+  <h4>1.2.2 Máquina Extendida</h4>
+  <p>Más allá de administrar recursos, el sistema operativo proporciona una capa de abstracción entre el hardware y los procesos, simplificando las interacciones y ofreciendo una interfaz uniforme. Esta abstracción permite que las aplicaciones realicen solicitudes de alto nivel al sistema operativo, en lugar de lidiar con la complejidad de las operaciones de bajo nivel del hardware. Por ejemplo, cuando un proceso necesita almacenar datos en un disco, no tiene que preocuparse por controlar qué sectores están ocupados y cuáles disponibles, o cómo comunicarse directamente con la controladora del disco. Sin el sistema operativo, cada programador tendría que implementar esta funcionalidad compleja en sus aplicaciones.</p>
+  <p>Gracias al sistema operativo, las aplicaciones pueden hacer solicitudes abstractas como "guardar este texto en tal archivo", dejando que el sistema operativo se encargue de traducir esta solicitud a las operaciones de bajo nivel necesarias para comunicarse con el hardware, como dividir los datos en bloques y escribirlos en sectores específicos del disco. Este concepto de "máquina extendida" es clave, ya que proporciona una interfaz más sencilla y práctica para los desarrolladores y usuarios.</p>
+  <p>Es importante destacar que conceptos como el de "archivo" no existen en el hardware; son abstracciones creadas por el sistema operativo para facilitar el manejo de los datos. En lugar de que las aplicaciones trabajen directamente con bloques o sectores, el sistema operativo permite que interactúen con archivos y carpetas, brindando un modelo más intuitivo y eficiente para los procesos.</p>
+  <p>En resumen, estos roles explican por qué es indispensable que una PC tenga un sistema operativo: por un lado, necesitamos un gestor que arbitre las solicitudes de recursos entre procesos y, por otro, un sistema que simplifique las interacciones con el hardware, proporcionando una interfaz abstracta y uniforme que facilite tanto el desarrollo como el uso de aplicaciones.</p>
+
+  <p>Dentro de este marco, el núcleo del sistema operativo desempeña las siguientes funciones específicas:</p>
+  <table>
+    <thead><tr><th>Función</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Gestión de Procesos</td><td>Supervisa la creación, suspensión y finalización de procesos, garantizando su comunicación y sincronización. Actúa como mediador entre los procesos y los recursos disponibles.</td></tr>
+      <tr><td>Gestión de Memoria</td><td>Controla la asignación y liberación de memoria, optimizando el uso de la RAM y proporcionando memoria virtual para expandir las capacidades del sistema.</td></tr>
+      <tr><td>Control de Dispositivos</td><td>Facilita la interacción entre el hardware y el software mediante controladores, que son abstraídos y gestionados por el núcleo para ofrecer acceso uniforme a los dispositivos.</td></tr>
+      <tr><td>Gestión del Sistema de Archivos</td><td>Organiza y proporciona acceso eficiente a los datos almacenados en dispositivos de almacenamiento.</td></tr>
+      <tr><td>Seguridad y Protección</td><td>Implementa barreras para evitar accesos no autorizados, asegurando la integridad del sistema y los datos.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 id="s1-3">1.3 Espacios del Kernel y de Usuario</h3>
+  <p>Una forma de distinguir qué procesos forman parte del sistema operativo es identificar dónde se ejecutan y cómo interactúan con los recursos del sistema. Esta diferenciación está estrechamente vinculada con los modos de ejecución del procesador, que son el modo kernel y el modo usuario:</p>
+  <ul>
+    <li><strong>Modo Kernel:</strong> En este modo, las instrucciones en código máquina tienen acceso directo tanto al hardware como a toda la memoria RAM. Esto significa que las operaciones críticas, como gestionar dispositivos o asignar memoria, pueden llevarse a cabo sin restricciones. El espacio del kernel es donde se ejecutan los procesos que forman parte del sistema operativo, como el núcleo (kernel) y los controladores esenciales. Este espacio es exclusivo y está reservado para tareas que requieren control total sobre el sistema.</li>
+    <li><strong>Modo Usuario:</strong> En este modo, las instrucciones del procesador no tienen acceso directo al hardware ni a la memoria del sistema, lo que protege la estabilidad y seguridad del sistema. Los procesos que operan en el espacio de usuario son considerados "normales" y deben realizar solicitudes al sistema operativo, conocidas como llamadas al sistema, para ejecutar operaciones privilegiadas como leer un archivo, asignar memoria o enviar datos a un dispositivo.</li>
+  </ul>
+  <p>En este sentido, otro modo de definir un sistema operativo, además de por sus funciones, es como aquel software que se ejecuta en el espacio del kernel. Esto incluye el núcleo y otros componentes esenciales que interactúan directamente con el hardware para gestionar recursos y garantizar el funcionamiento correcto del sistema.</p>
+  <p>En resumen, los espacios del kernel y de usuario y sus respectivos modos de ejecución del procesador son fundamentales para entender cómo el sistema operativo controla el acceso al hardware y mantiene la seguridad del sistema. En el modo kernel, las instrucciones tienen control total sobre los recursos, mientras que en el modo usuario, los procesos están restringidos y dependen del sistema operativo para realizar operaciones más complejas. Esta arquitectura protege al sistema de errores y fallos potenciales, permitiendo un entorno controlado y seguro para las aplicaciones.</p>
+
+  <h3 id="s1-4">1.4 Tipos de Sistemas Operativos y relación con los modos de operación</h3>
+  <p>Los sistemas operativos pueden clasificarse según cómo distribuyen sus componentes entre el espacio del kernel y el espacio de usuario, lo que influye directamente en su diseño y funcionamiento:</p>
+
+  <div class="grid">
+    <div class="card">
+      <h4>1.4.1 Monolíticos</h4>
+      <p>El núcleo incluye todas las funciones esenciales y muchas no esenciales del sistema operativo. Todo el sistema operativo opera en el espacio del kernel, lo que proporciona alta eficiencia pero menos modularidad.</p>
+      <p><strong>Ejemplo:</strong> Linux.</p>
+    </div>
+    <div class="card">
+      <h4>1.4.2 Microkernels</h4>
+      <p>Solo las funciones más básicas (gestión de procesos, memoria y comunicación) residen en el espacio del kernel. Las demás funciones operan en el espacio de usuario, lo que mejora la modularidad y la seguridad a costa de un rendimiento ligeramente menor.</p>
+      <p><strong>Ejemplo:</strong> Minix, QNX.</p>
+    </div>
+    <div class="card">
+      <h4>1.4.3 Híbridos</h4>
+      <p>Combinan características de núcleos monolíticos y microkernels. Mantienen funciones críticas en el espacio del kernel, pero trasladan algunas funciones adicionales al espacio de usuario para lograr un balance entre eficiencia y modularidad.</p>
+      <p><strong>Ejemplo:</strong> Windows NT, macOS.</p>
+    </div>
+  </div>
+  <p>Al observar cómo los procesos y funciones se distribuyen entre el espacio del kernel y el espacio de usuario, se obtiene una visión clara de las diferencias entre los diseños de sistemas operativos y su impacto en la seguridad, modularidad y eficiencia.</p>
+
+  <!-- ============ 2 ============ -->
+  <h2 id="s2">2. Comunicación entre el sistema operativo, los procesos, el hardware y el procesador</h2>
+
+  <h3 id="s2-1">2.1 Las interrupciones</h3>
+  <p>Las interrupciones son mecanismos fundamentales que permiten la comunicación entre el hardware, el procesador y el sistema operativo. Son eventos que cambian el flujo normal de ejecución de un programa, permitiendo al sistema responder a situaciones específicas de manera eficiente. Estas interrupciones operan bajo el control de dos modos del procesador: <strong>modo kernel</strong> y <strong>modo usuario</strong>.</p>
+  <p>El <strong>modo kernel</strong> permite la ejecución de instrucciones privilegiadas del sistema operativo, mientras que el <strong>modo usuario</strong> restringe las operaciones para evitar que el código no autorizado acceda a recursos críticos del sistema.</p>
+
+  <h3 id="s2-2">2.2 Tipos de interrupciones</h3>
+
+  <table>
+    <thead><tr><th>Tipo</th><th>Origen</th><th>Ejemplo</th><th>Modo de operación</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Interrupciones de hardware</td>
+        <td>Generadas por dispositivos externos, como teclados, discos duros o tarjetas de red, para notificar eventos al procesador.</td>
+        <td>Una tecla presionada en el teclado genera una señal que indica al sistema operativo que debe procesar esta entrada.</td>
+        <td>Al ocurrir una interrupción de hardware, el procesador cambia del modo usuario al modo kernel, permitiendo al sistema operativo manejar la solicitud de manera segura.</td>
+      </tr>
+      <tr>
+        <td>Interrupciones de software</td>
+        <td>Generadas por programas en ejecución para solicitar servicios al sistema operativo (como lectura/escritura en disco).</td>
+        <td>Un programa que realiza una llamada al sistema (como <code>open()</code> para abrir un archivo) genera una interrupción de software.</td>
+        <td>Estas interrupciones también hacen que el procesador pase del modo usuario al modo kernel, permitiendo al sistema operativo gestionar la solicitud del proceso.</td>
+      </tr>
+      <tr>
+        <td>Trampas (traps)</td>
+        <td>Generadas internamente por el procesador, típicamente como respuesta a condiciones excepcionales o errores en tiempo de ejecución.</td>
+        <td>Una operación de división por cero o una instrucción no válida genera una trampa.</td>
+        <td>Las trampas fuerzan un cambio al modo kernel, donde el sistema operativo puede manejar la situación, ya sea terminando el programa, informando un error o tomando medidas de recuperación.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <figure class="diagram">
+    <svg viewBox="0 0 560 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dtitle1">
+      <title id="dtitle1">Las interrupciones como mecanismos de comunicación</title>
+      <circle cx="280" cy="160" r="70" fill="#f6d365" stroke="#c9a227" stroke-width="1.5"/>
+      <text x="280" y="155" text-anchor="middle" font-size="16" font-weight="700" fill="#3a2f00">Sistema</text>
+      <text x="280" y="175" text-anchor="middle" font-size="16" font-weight="700" fill="#3a2f00">operativo</text>
+
+      <circle cx="80" cy="90" r="52" fill="#a9b8f2" stroke="#5b6fd6" stroke-width="1.5"/>
+      <text x="80" y="94" text-anchor="middle" font-size="13" fill="#1c2560">Dispositivos</text>
+      <text x="80" y="110" text-anchor="middle" font-size="11" fill="#1c2560">(hardware)</text>
+
+      <circle cx="80" cy="240" r="52" fill="#f3a6a6" stroke="#d65b5b" stroke-width="1.5"/>
+      <text x="80" y="244" text-anchor="middle" font-size="13" fill="#5e0f0f">Procesos</text>
+
+      <circle cx="480" cy="160" r="52" fill="#a6e3ae" stroke="#4caf60" stroke-width="1.5"/>
+      <text x="480" y="164" text-anchor="middle" font-size="13" fill="#0f3d17">Procesador</text>
+
+      <path d="M125 110 L215 145" stroke="#333" stroke-width="1.5" fill="none" marker-end="url(#arrow1)"/>
+      <text x="150" y="130" font-size="11" fill="#333">Interrupción de hardware</text>
+
+      <path d="M125 220 L215 180" stroke="#333" stroke-width="1.5" fill="none" marker-end="url(#arrow1)"/>
+      <text x="140" y="210" font-size="11" fill="#333">Interrupción de software</text>
+
+      <path d="M432 145 L345 140" stroke="#333" stroke-width="1.5" fill="none" marker-end="url(#arrow1)"/>
+      <text x="360" y="120" font-size="11" fill="#333" font-style="italic">Trampa</text>
+
+      <defs>
+        <marker id="arrow1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#333"/>
+        </marker>
+      </defs>
+    </svg>
+    <figcaption>Figura 1: Las interrupciones como mecanismos de comunicación entre el hardware, el procesador y el sistema operativo.</figcaption>
+  </figure>
+
+  <h3 id="s2-3">2.3 Llamadas al sistema</h3>
+  <p>En la sección anterior, exploramos cómo el sistema operativo puede definirse tanto por sus funciones como por su ubicación en el <strong>espacio del kernel</strong>, que es el lugar donde se ejecuta el núcleo y otros componentes esenciales. También analizamos la diferenciación entre el <strong>modo kernel</strong> y el <strong>modo usuario</strong>, y cómo estos modos están vinculados a la arquitectura del procesador para garantizar la seguridad y estabilidad del sistema.</p>
+  <p>En este contexto, las <strong>aplicaciones</strong> o <strong>procesos</strong> —que son programas en ejecución— se ejecutan en el <strong>espacio de usuario</strong>. Debido a las restricciones inherentes a este modo, los procesos no pueden acceder directamente al hardware ni a recursos privilegiados, como la memoria o los dispositivos de entrada/salida. En su lugar, cuando necesitan realizar estas operaciones, recurren a <strong>llamadas al sistema</strong> para solicitar al sistema operativo que actúe como intermediario. Estas solicitudes generan un cambio del <strong>modo usuario</strong> al <strong>modo kernel</strong>, lo que permite al sistema operativo manejar las operaciones críticas de manera segura.</p>
+
+  <!-- ============ 3 ============ -->
+  <h2 id="s3">3. Proceso de arranque</h2>
+  <p>El arranque de un sistema operativo sigue una secuencia precisa que inicia con la carga y ejecución del firmware de la placa madre (BIOS o EFI) y finaliza con la inicialización del núcleo del sistema operativo. Esta secuencia depende de elementos clave como el esquema de particiones (MBR o GPT) y el tipo de firmware, los cuales interactúan para localizar y cargar el sistema operativo.</p>
+
+  <h3>3.1.1 Encender el sistema</h3>
+  <ul>
+    <li>Al encender la computadora, el procesador carga en la <strong>RAM</strong> el firmware de la placa madre desde la memoria ROM, EEPROM o Flash donde está almacenado.</li>
+    <li>El firmware es un software básico que inicializa el hardware y gestiona los primeros pasos del proceso de arranque.</li>
+  </ul>
+
+  <h3>3.1.2 Verificar el hardware (POST)</h3>
+  <ul>
+    <li>El firmware ejecuta el <strong>Power-On Self Test (POST)</strong>, un proceso que comprueba el estado y funcionamiento básico de los componentes, como la memoria RAM, la CPU, la tarjeta gráfica y los dispositivos de entrada/salida.</li>
+    <li>Si POST detecta errores críticos, el arranque se detiene y el sistema puede emitir códigos sonoros (beeps) o mostrar mensajes en pantalla.</li>
+  </ul>
+
+  <h3>3.1.3 Seleccionar el dispositivo de arranque</h3>
+  <ul>
+    <li>El firmware consulta la configuración del <strong>orden de arranque</strong>, almacenada en la <strong>CMOS RAM</strong>, una pequeña memoria alimentada por una batería en la placa madre.</li>
+    <li>Según el orden configurado (por ejemplo, disco duro, unidad USB, red), el firmware selecciona el dispositivo donde buscará el sistema operativo.</li>
+  </ul>
+
+  <h3>3.1.4 Determinar el esquema de particiones</h3>
+  <p>El firmware utiliza el esquema de particiones del dispositivo de arranque (MBR o GPT) para interpretar cómo está organizado el disco y localizar el cargador de arranque.</p>
+  <p><strong>Por qué el firmware necesita un esquema de particiones:</strong> el firmware no "sabe" de antemano cómo está estructurado el disco; necesita un estándar como MBR o GPT para identificar las particiones disponibles, ubicar el código de arranque necesario (que puede estar en el sector de arranque -MBR- o en una partición especial -ESP en GPT-), y determinar cómo acceder a los datos siguiendo las reglas definidas por el esquema de particiones. Sin esta información, el firmware no podría localizar ni cargar el cargador de arranque ni el sistema operativo.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h4>Si el sistema utiliza BIOS</h4>
+      <p>BIOS busca el <strong>Master Boot Record (MBR)</strong> en el primer sector del disco (sector 0). Este contiene una tabla de particiones que describe las particiones primarias del disco, un bloque de código de arranque que inicia el cargador del sistema operativo, y una marca de arranque (el valor <code>55AAh</code> en los dos últimos bytes del sector, indicando que el disco es arrancable). Si el MBR está presente y válido, el código de arranque se carga en la RAM y el control se transfiere a este código.</p>
+    </div>
+    <div class="card">
+      <h4>Si el sistema utiliza EFI</h4>
+      <p>EFI (o UEFI) es un firmware más avanzado que busca la <strong>EFI System Partition (ESP)</strong>, definida en el esquema GPT. La ESP es una partición especial donde se almacenan los cargadores de arranque y aplicaciones de arranque, utiliza el sistema de archivos FAT32 (compatible con una amplia variedad de hardware) y contiene archivos como <code>bootx64.efi</code>, que cargan el sistema operativo. EFI utiliza la información de GPT para localizar la ESP, cargar el cargador de arranque en la RAM y transferir el control.</p>
+    </div>
+  </div>
+
+  <h3>3.1.5 Cargar el manejador de arranque</h3>
+  <ul>
+    <li>Una vez identificado, el manejador de arranque (como GRUB o Windows Boot Manager) toma el control del arranque.</li>
+    <li>Presenta un menú (si hay múltiples sistemas operativos) y localiza el núcleo del sistema operativo en el sistema de archivos, cargándolo en la memoria RAM.</li>
+  </ul>
+
+  <h3>3.1.6 Iniciar el núcleo del sistema operativo</h3>
+  <p>El núcleo del sistema operativo se descomprime y comienza la inicialización del hardware.</p>
+  <table>
+    <thead><tr><th>En Linux</th><th>En Windows</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Se carga el <strong>initramfs</strong> (sistema de archivos inicial). Se monta el sistema de archivos raíz. Se ejecuta el proceso inicial (<strong>init</strong> o <strong>systemd</strong>) para iniciar servicios del usuario.</td>
+        <td>Se carga el núcleo (<strong>ntoskrnl.exe</strong>), que inicializa los controladores esenciales y servicios básicos. Se activa el registro y se inicializa el entorno gráfico.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>3.1.7 Transición al entorno del usuario</h3>
+  <p>Una vez cargados los servicios y el núcleo operativo, el sistema está listo para recibir entradas del usuario a través de la interfaz gráfica o la consola.</p>
+
+  <h3>3.2 Resumen del proceso</h3>
+  <ol>
+    <li>El firmware (BIOS/EFI) se carga en la RAM y inicializa el hardware.</li>
+    <li>Se selecciona el dispositivo de arranque según el orden definido en la CMOS.</li>
+    <li>BIOS busca el MBR (con marca 55AAh); EFI busca la ESP.</li>
+    <li>Se carga el manejador de arranque en la RAM.</li>
+    <li>El manejador carga el núcleo del sistema operativo.</li>
+    <li>El núcleo inicializa el hardware y los servicios.</li>
+    <li>Se transfiere el control al entorno del usuario.</li>
+  </ol>
+  <p>Esta secuencia asegura que el sistema operativo pueda iniciarse correctamente, con cada componente cumpliendo un rol esencial en el proceso.</p>
+
+  <!-- ============ 4 ============ -->
+  <h2 id="s4">4. Gestión de Entrada/Salida y de Memoria</h2>
+
+  <h3 id="s4-1">4.1 Gestión de Entrada/Salida</h3>
+  <p>La gestión de memoria en los sistemas operativos no solo se ocupa de optimizar el uso de la RAM, sino también de la correcta comunicación entre el software y el hardware a través de los dispositivos de Entrada/Salida (E/S). La jerarquía de E/S, tal como la describe Tanenbaum, establece una estructura que organiza el flujo de datos entre los procesos de usuario y los dispositivos físicos, al mismo tiempo que asegura la protección de la memoria y los recursos del sistema.</p>
+
+  <h4>4.1.1 Jerarquía de Entrada/Salida</h4>
+  <p>La jerarquía de E/S es un modelo que describe cómo el sistema operativo maneja las operaciones de entrada y salida a través de diferentes capas. Estas capas incluyen el hardware físico, los controladores, el sistema de archivos, y las bibliotecas de E/S, hasta llegar a las aplicaciones de usuario que realizan las operaciones finales.</p>
+
+  <figure class="diagram">
+    <svg viewBox="0 0 560 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dtitle2">
+      <title id="dtitle2">Jerarquía de Entrada/Salida</title>
+      <g font-size="13" font-family="inherit">
+        <rect x="40" y="15" width="480" height="40" rx="8" fill="#a6e3ae" stroke="#4caf60"/>
+        <text x="280" y="40" text-anchor="middle" fill="#0f3d17">Aplicaciones de usuario</text>
+
+        <rect x="40" y="65" width="480" height="40" rx="8" fill="#c9e6c0" stroke="#4caf60"/>
+        <text x="280" y="90" text-anchor="middle" fill="#0f3d17">Bibliotecas de Entrada/Salida (fopen, fclose, printf…)</text>
+
+        <rect x="40" y="115" width="480" height="40" rx="8" fill="#fbe7a1" stroke="#c9a227"/>
+        <text x="280" y="140" text-anchor="middle" fill="#3a2f00">Sistema de archivos</text>
+
+        <rect x="40" y="165" width="480" height="40" rx="8" fill="#f6d365" stroke="#c9a227"/>
+        <text x="280" y="190" text-anchor="middle" fill="#3a2f00">Sistema de E/S genérico (colas, buffering, caching)</text>
+
+        <rect x="40" y="215" width="480" height="40" rx="8" fill="#f3a6a6" stroke="#d65b5b"/>
+        <text x="280" y="240" text-anchor="middle" fill="#5e0f0f">Controladores de dispositivos (drivers) y manejadores de interrupciones</text>
+
+        <rect x="40" y="265" width="480" height="40" rx="8" fill="#a9b8f2" stroke="#5b6fd6"/>
+        <text x="280" y="290" text-anchor="middle" fill="#1c2560">Hardware (discos, teclados, pantallas…)</text>
+      </g>
+    </svg>
+    <figcaption>Jerarquía de E/S: capas desde las aplicaciones de usuario hasta el hardware físico.</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th>Capa</th><th>Función</th></tr></thead>
+    <tbody>
+      <tr><td>Hardware</td><td>Dispositivos físicos (discos, teclados, pantallas, etc.), conectados al sistema operativo mediante controladores y manejadores de interrupciones.</td></tr>
+      <tr><td>Manejadores de Interrupciones</td><td>Parte del sistema operativo que gestiona las interrupciones generadas por el hardware (teclas pulsadas, paquetes de red, fin de operación de disco). Diseñados para ser rápidos y eficientes.</td></tr>
+      <tr><td>Controladores de Dispositivos (Drivers)</td><td>Programas de software que traducen las solicitudes de E/S de alto nivel del sistema operativo o las aplicaciones en instrucciones específicas que el hardware puede ejecutar. No confundir con la controladora de disco, que es el componente físico que gestiona la transferencia de datos.</td></tr>
+      <tr><td>Sistema de E/S Genérico</td><td>Abstrae los detalles de los controladores y gestiona la cola de solicitudes de E/S, el buffering y el caching, optimizando el acceso a los dispositivos.</td></tr>
+      <tr><td>Sistema de Archivos</td><td>Organiza y gestiona los datos en los dispositivos de almacenamiento, proporcionando una interfaz para manipular archivos y directorios de manera independiente del hardware.</td></tr>
+      <tr><td>Bibliotecas de Entrada/Salida</td><td>Software independiente del sistema operativo que ofrece funciones estándar de E/S (como <code>fopen()</code>, <code>fclose()</code> o <code>printf()</code> en C), sin que el programador deba ocuparse de los detalles del hardware.</td></tr>
+      <tr><td>Aplicaciones de Usuario</td><td>Realizan operaciones de E/S utilizando las bibliotecas de entrada/salida, sin interactuar directamente con el hardware.</td></tr>
+    </tbody>
+  </table>
+
+  <h4>4.1.2 Anillos de Protección y Gestión de Recursos Críticos</h4>
+  <p><strong>¿Los controladores de dispositivos deben ejecutarse en modo kernel o en modo usuario?</strong></p>
+  <p>La ejecución de controladores de dispositivos plantea una cuestión importante sobre el nivel de privilegios más adecuado para garantizar tanto su funcionalidad como la seguridad del sistema. Además de los modos kernel y usuario, los procesadores modernos cuentan con un sistema de <strong>anillos de protección</strong>. Estos anillos organizan los niveles de privilegio en el acceso a los recursos del sistema, desde el <strong>Anillo 0</strong> (modo kernel), que tiene acceso total al hardware y todos los recursos críticos, hasta el <strong>Anillo 3</strong> (modo usuario), donde los procesos tienen privilegios limitados para prevenir posibles daños al sistema.</p>
+  <p>Los controladores de dispositivos necesitan privilegios suficientes para interactuar directamente con el hardware, lo que normalmente justificaría su ejecución en el Anillo 0. Sin embargo, otorgarles acceso total al sistema puede ser un riesgo, ya que podrían acceder a memoria o recursos críticos no relacionados con su tarea. Por esta razón, lo más adecuado sería que los controladores de dispositivos se ejecuten en un <strong>anillo de protección intermedio</strong>, que les permita comunicarse eficazmente con el hardware sin comprometer la seguridad del sistema al restringir su acceso a memoria y recursos ajenos a su función específica.</p>
+
+  <figure class="diagram">
+    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dtitle3">
+      <title id="dtitle3">Anillos de protección</title>
+      <circle cx="200" cy="190" r="175" fill="#a6e3ae" stroke="#4caf60"/>
+      <circle cx="200" cy="190" r="135" fill="#d7ec9a" stroke="#a9c93f"/>
+      <circle cx="200" cy="190" r="95" fill="#fbe7a1" stroke="#c9a227"/>
+      <circle cx="200" cy="190" r="55" fill="#f3a6a6" stroke="#d65b5b"/>
+      <text x="200" y="60" text-anchor="middle" font-size="13" fill="#0f3d17">Anillo 3 — Aplicaciones</text>
+      <text x="200" y="100" text-anchor="middle" font-size="12" fill="#3a3d00">Anillo 2 — Drivers</text>
+      <text x="200" y="135" text-anchor="middle" font-size="12" fill="#3a2f00">Anillo 1 — Drivers</text>
+      <text x="200" y="193" text-anchor="middle" font-size="13" font-weight="700" fill="#5e0f0f">Anillo 0</text>
+      <text x="200" y="210" text-anchor="middle" font-size="11" fill="#5e0f0f">Kernel</text>
+      <text x="330" y="40" font-size="11" fill="#333">Menos privilegios ↑</text>
+      <text x="330" y="360" font-size="11" fill="#333">Más privilegios ↓</text>
+    </svg>
+    <figcaption>Figura 2: Anillos de protección, del Anillo 0 (kernel, máximo privilegio) al Anillo 3 (aplicaciones, mínimo privilegio).</figcaption>
+  </figure>
+
+  <h3 id="s4-2">4.2 Gestión de Memoria</h3>
+
+  <h4>4.2.1 Problemas de Protección y Reubicación en la Gestión de Memoria</h4>
+  <p>La <strong>protección</strong> y la <strong>reubicación</strong> son dos problemas fundamentales que un sistema operativo debe resolver al gestionar la memoria de un sistema. Ambos problemas están intrínsecamente relacionados con la capacidad del procesador para traducir las direcciones virtuales (o lógicas) generadas por un programa en direcciones reales (o físicas) en la memoria principal.</p>
+  <p><strong>4.2.1.1 Protección:</strong> implica garantizar que un proceso no pueda acceder al espacio de memoria de otro proceso ni a las áreas reservadas para el sistema operativo. Esto es fundamental para evitar conflictos, corrupción de datos o comportamientos inesperados entre procesos.</p>
+  <p><strong>4.2.1.2 Reubicación:</strong> implica que el sistema operativo debe ser capaz de asignar un proceso a cualquier área libre de la memoria física en el momento de su ejecución. Esto permite aprovechar la memoria disponible de manera eficiente, ya que los procesos no dependen de estar ubicados en un lugar específico.</p>
+  <p><strong>Traducción de Direcciones Virtuales a Reales:</strong> resolver estos problemas requiere que el procesador traduzca las direcciones virtuales generadas por las instrucciones de código máquina del programa en direcciones reales en la memoria física. Esta traducción es posible gracias a mecanismos específicos del procesador, que trabajan con información proporcionada por el sistema operativo. Los métodos más comunes para realizar esta traducción son el uso de <strong>registros base y límite</strong> (en el caso del intercambio) o <strong>tablas de páginas</strong> (en el caso de la paginación).</p>
+
+  <h4>4.2.2 Intercambio (Swapping)</h4>
+  <p>El intercambio (swapping) es un método básico para gestionar la memoria y resolver los problemas de protección y reubicación. Este mecanismo mueve procesos completos entre la memoria principal (RAM) y el almacenamiento secundario (como discos duros o SSD) para liberar espacio y permitir la multitarea.</p>
+
+  <p><strong>4.2.2.1 Traducción de Dirección Virtual a Real en el Intercambio</strong></p>
+  <p>El procesador utiliza dos registros clave:</p>
+  <ul>
+    <li><strong>Registro Base:</strong> contiene la dirección de memoria física donde comienza el proceso en la RAM.</li>
+    <li><strong>Registro Límite:</strong> define el tamaño máximo de memoria asignada al proceso.</li>
+  </ul>
+  <p>Cuando una instrucción del programa genera una dirección virtual, el procesador realiza los siguientes pasos:</p>
+  <ul>
+    <li><strong>Comprobación de Protección:</strong> la dirección virtual se compara con el valor en el registro límite. Si la dirección virtual es mayor que el límite, el procesador genera una excepción, evitando accesos no autorizados.</li>
+    <li><strong>Traducción:</strong> si la dirección virtual es válida, se suma al valor del registro base para obtener la dirección física real.</li>
+  </ul>
+
+  <p><strong>4.2.2.2 Protección en el Intercambio</strong></p>
+  <p>Los registros base y límite garantizan que el proceso solo pueda acceder a su espacio asignado. Si un proceso intenta acceder a una dirección fuera de su rango, el procesador bloquea el acceso y genera una interrupción.</p>
+
+  <p><strong>4.2.2.3 Limitaciones del Intercambio</strong></p>
+  <ul>
+    <li>El intercambio requiere mover procesos completos entre RAM y almacenamiento secundario, lo que puede ser lento y consume recursos.</li>
+    <li>Es ineficiente para manejar procesos grandes o un gran número de procesos.</li>
+  </ul>
+
+  <h4>4.2.3 Paginación</h4>
+  <p>La paginación es un método más avanzado que divide tanto la memoria virtual como la memoria física en bloques de tamaño fijo llamados <strong>páginas</strong> y <strong>marcos</strong>, respectivamente. Este método resuelve los problemas de protección y reubicación de manera más eficiente y flexible que el intercambio.</p>
+
+  <p><strong>4.2.3.1 Traducción de Dirección Virtual a Real en la Paginación</strong></p>
+  <p>El procesador utiliza una estructura llamada <strong>tabla de páginas</strong>, que mapea las páginas virtuales del proceso a los marcos físicos en la RAM.</p>
+  <ul>
+    <li><strong>Estructura de la dirección virtual:</strong> se divide en dos partes — el <em>número de página</em> (identifica la página en el espacio virtual del proceso) y el <em>desplazamiento dentro de la página</em> (especifica la ubicación exacta dentro de esa página).</li>
+    <li><strong>Proceso de traducción:</strong> el procesador consulta la tabla de páginas del proceso, almacenada en memoria; utiliza el número de página para encontrar el marco correspondiente en la memoria física; y combina la dirección base del marco con el desplazamiento dentro de la página para obtener la dirección física real.</li>
+    <li><strong>Comprobación de protección:</strong> cada entrada en la tabla de páginas incluye permisos (lectura, escritura, ejecución) que el procesador verifica antes de acceder a una dirección. Si el proceso intenta acceder a una página para la que no tiene permisos, el procesador genera una excepción.</li>
+  </ul>
+
+  <figure class="diagram">
+    <svg viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dtitle4">
+      <title id="dtitle4">Conversión de dirección virtual a física con paginación</title>
+      <rect x="20" y="20" width="130" height="140" rx="10" fill="#a9e0d8" stroke="#3f9c8c"/>
+      <text x="85" y="45" text-anchor="middle" font-size="12" fill="#123c34">Proceso A</text>
+      <rect x="55" y="60" width="60" height="90" fill="#f6d365" stroke="#c9a227"/>
+      <text x="85" y="55" text-anchor="middle" font-size="10" fill="#333">Tabla de páginas</text>
+
+      <rect x="410" y="20" width="130" height="140" rx="10" fill="#a9e0d8" stroke="#3f9c8c"/>
+      <text x="475" y="45" text-anchor="middle" font-size="12" fill="#123c34">Proceso B</text>
+      <rect x="445" y="60" width="60" height="90" fill="#f5a3c7" stroke="#c93f7e"/>
+      <text x="475" y="55" text-anchor="middle" font-size="10" fill="#333">Tabla de páginas</text>
+
+      <rect x="60" y="200" width="440" height="40" fill="#e6e6e6" stroke="#999"/>
+      <text x="280" y="255" text-anchor="middle" font-size="12" fill="#333">Memoria Física (marcos asignados a A y B, no necesariamente contiguos)</text>
+
+      <rect x="90" y="200" width="25" height="40" fill="#a6e3ae"/>
+      <rect x="160" y="200" width="25" height="40" fill="#f6d365"/>
+      <rect x="200" y="200" width="25" height="40" fill="#f5a3c7"/>
+      <rect x="260" y="200" width="25" height="40" fill="#f6d365"/>
+      <rect x="330" y="200" width="25" height="40" fill="#f5a3c7"/>
+      <rect x="400" y="200" width="25" height="40" fill="#f6d365"/>
+      <rect x="460" y="200" width="25" height="40" fill="#a6e3ae"/>
+
+      <path d="M85 150 L102 200" stroke="#3f9c8c" stroke-width="1.2" fill="none"/>
+      <path d="M85 150 L172 200" stroke="#c9a227" stroke-width="1.2" fill="none"/>
+      <path d="M85 150 L272 200" stroke="#c9a227" stroke-width="1.2" fill="none"/>
+      <path d="M85 150 L412 200" stroke="#c9a227" stroke-width="1.2" fill="none"/>
+
+      <path d="M475 150 L472 200" stroke="#3f9c8c" stroke-width="1.2" fill="none"/>
+      <path d="M475 150 L212 200" stroke="#c93f7e" stroke-width="1.2" fill="none"/>
+      <path d="M475 150 L342 200" stroke="#c93f7e" stroke-width="1.2" fill="none"/>
+    </svg>
+    <figcaption>Figura 3: Conversión de dirección virtual a física con paginación. Las páginas de un mismo proceso pueden ubicarse en marcos no contiguos de memoria física.</figcaption>
+  </figure>
+
+  <p><strong>4.2.3.2 Ventajas de la Paginación sobre el Intercambio</strong></p>
+  <ul>
+    <li><strong>Flexibilidad en la ubicación de los procesos:</strong> en el intercambio, un proceso debe ocupar un bloque contiguo de memoria física, lo que puede fragmentar la memoria. En la paginación, las páginas de un proceso pueden distribuirse en diferentes marcos de la memoria física, eliminando la necesidad de bloques contiguos.</li>
+    <li><strong>Mejor uso de la memoria:</strong> la paginación permite cargar solo las páginas necesarias de un proceso, mientras que el intercambio requiere cargar el proceso completo. Esto optimiza el uso de la RAM y permite que más procesos se ejecuten simultáneamente.</li>
+    <li><strong>Eficiencia en la gestión de memoria virtual:</strong> la paginación admite <strong>memoria virtual</strong>, donde el espacio de direcciones virtuales es mayor que la RAM disponible, gracias a la carga y descarga dinámica de páginas.</li>
+  </ul>
+
+  <h4>4.2.4 Conclusión</h4>
+  <p>Tanto el intercambio como la paginación resuelven los problemas de protección y reubicación al permitir que los procesos se alojen en cualquier lugar de la memoria y evitar accesos no autorizados. Sin embargo, la <strong>paginación es una solución superior</strong> porque reduce la fragmentación, optimiza el uso de la memoria física y facilita la ejecución simultánea de múltiples procesos con menos requisitos de espacio en la RAM. Esto la convierte en el estándar para la gestión de memoria en los sistemas modernos.</p>
+
+  <!-- ============ 5 ============ -->
+  <h2 id="s5">5. Gestión de Procesos</h2>
+  <p>La <strong>gestión de procesos</strong> es una de las funciones más importantes de un sistema operativo. Consiste en administrar los recursos y las tareas asociadas a los programas en ejecución (procesos) para garantizar que se utilicen de manera eficiente, permitiendo la multitarea, la comunicación entre procesos y la estabilidad del sistema.</p>
+
+  <h3>5.1.1 Procesos e Hilos</h3>
+  <div class="grid">
+    <div class="card">
+      <h4>Proceso</h4>
+      <p>Un <strong>proceso</strong> es una instancia de un programa en ejecución. Cada proceso tiene su propio espacio de memoria (direcciones de memoria independientes) y recursos, como archivos abiertos y dispositivos. Es una unidad de aislamiento; los procesos no comparten directamente su memoria con otros procesos.</p>
+    </div>
+    <div class="card">
+      <h4>Hilo</h4>
+      <p>Un <strong>hilo</strong> es la unidad más pequeña de ejecución dentro de un proceso. Todos los hilos de un proceso comparten su espacio de memoria y recursos asociados. Cada hilo tiene su propia pila, contador de programa y registros.</p>
+    </div>
+  </div>
+
+  <p>El sistema operativo utiliza una estructura llamada <strong>tabla de procesos</strong> para mantener información sobre cada proceso. Esta tabla incluye:</p>
+
+  <table>
+    <thead><tr><th>Información por Proceso</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Identificador del proceso (PID)</td><td>Un número único que identifica al proceso.</td></tr>
+      <tr><td>Estado del proceso</td><td>En ejecución, listo o bloqueado.</td></tr>
+      <tr><td>Contador de programa (PC)</td><td>Dirección de la siguiente instrucción a ejecutar.</td></tr>
+      <tr><td>Registros de CPU</td><td>Para restaurar el estado del proceso cuando vuelve a ejecutarse.</td></tr>
+      <tr><td>Espacio de memoria asignado</td><td>Direcciones virtuales y reales utilizadas por el proceso.</td></tr>
+      <tr><td>Recursos asociados</td><td>Archivos abiertos, dispositivos utilizados, permisos.</td></tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead><tr><th>Información por Hilo</th><th>Descripción</th></tr></thead>
+    <tbody>
+      <tr><td>Identificador del hilo (TID)</td><td>Identificación única del hilo dentro del proceso.</td></tr>
+      <tr><td>Estado del hilo</td><td>Similar al estado del proceso (en ejecución, listo, bloqueado).</td></tr>
+      <tr><td>Pila del hilo</td><td>Cada hilo tiene su propia pila para almacenar variables locales y datos temporales.</td></tr>
+      <tr><td>Registros y contador de programa (PC)</td><td>Al igual que el proceso, cada hilo mantiene su propio contexto de ejecución.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>5.1.2 Planificación de Procesos</h3>
+  <p>La <strong>planificación de procesos</strong> es el mecanismo mediante el cual el sistema operativo gestiona el cambio de estado de los procesos y decide qué proceso debe ejecutarse en cada momento. Este proceso asegura un uso eficiente de la CPU, la equidad entre los procesos y la capacidad de multitarea.</p>
+  <p>Los procesos pueden pasar entre tres estados principales:</p>
+  <ul>
+    <li><strong>Listo:</strong> el proceso está preparado para ejecutarse pero espera su turno.</li>
+    <li><strong>En ejecución:</strong> el proceso está utilizando la CPU y ejecutando sus instrucciones.</li>
+    <li><strong>Bloqueado:</strong> el proceso está esperando un evento externo (como una operación de entrada/salida).</li>
+  </ul>
+  <p>El <strong>planificador de procesos</strong> es responsable de mover los procesos entre estos estados, dependiendo de las condiciones del sistema. Utiliza estructuras como colas para gestionar los procesos en los diferentes estados.</p>
+
+  <h4>5.1.2.1 De "Listo" a "En ejecución"</h4>
+  <p>Cuando un proceso pasa de estar <strong>listo</strong> a <strong>en ejecución</strong>, el planificador selecciona el siguiente proceso de la cola de procesos listos y asigna la CPU a ese proceso.</p>
+  <p><strong>Interrupción de reloj en este contexto:</strong> el sistema operativo configura un temporizador de reloj para garantizar que el proceso no monopolice la CPU. Cuando el temporizador expira, se genera una interrupción de reloj, y el sistema operativo toma el control: guarda el estado del proceso actual (registros, contador de programa, etc.) en su tabla de procesos (<em>cambio de contexto</em>), devuelve el proceso actual a la cola de listos, selecciona un nuevo proceso de la cola de listos y restaura su estado, y el nuevo proceso comienza su ejecución.</p>
+
+  <h4>5.1.2.2 De "En ejecución" a "Bloqueado"</h4>
+  <p>Un proceso pasa del estado <strong>en ejecución</strong> a <strong>bloqueado</strong> cuando necesita esperar un evento externo, como la finalización de una operación de entrada/salida o la disponibilidad de un recurso.</p>
+  <p><strong>Cómo ocurre esto:</strong> el proceso realiza una llamada al sistema (por ejemplo, para leer un archivo); el sistema operativo lo pone en la cola de procesos bloqueados; el planificador selecciona otro proceso listo para ocupar la CPU.</p>
+  <p><em>Ejemplo:</em> un programa solicita leer datos de un disco. Mientras la operación de lectura se completa, el proceso se bloquea, liberando la CPU para otros procesos.</p>
+
+  <h4>5.1.2.3 De "Bloqueado" a "Listo"</h4>
+  <p>Un proceso bloqueado pasa a <strong>listo</strong> cuando el evento externo que esperaba ocurre, como la finalización de una operación de entrada/salida.</p>
+  <p><strong>Cómo ocurre esto:</strong> el controlador de hardware genera una interrupción para notificar al sistema operativo que el evento ha terminado (por ejemplo, la lectura de un archivo está completa); el sistema operativo mueve el proceso desde la cola de bloqueados a la cola de listos.</p>
+  <p><em>Ejemplo:</em> un proceso que estaba esperando la entrada de un usuario mediante teclado se desbloquea cuando el usuario escribe los datos, y queda listo para volver a ejecutarse.</p>
+
+  <figure class="diagram">
+    <svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="dtitle5">
+      <title id="dtitle5">Estados de un proceso</title>
+      <circle cx="280" cy="70" r="65" fill="#a9b8f2" stroke="#5b6fd6"/>
+      <text x="280" y="75" text-anchor="middle" font-size="14" fill="#1c2560">En ejecución</text>
+
+      <circle cx="480" cy="230" r="65" fill="#a6e3ae" stroke="#4caf60"/>
+      <text x="480" y="235" text-anchor="middle" font-size="14" fill="#0f3d17">Listo</text>
+
+      <circle cx="120" cy="230" r="65" fill="#f3a6a6" stroke="#d65b5b"/>
+      <text x="120" y="235" text-anchor="middle" font-size="14" fill="#5e0f0f">Bloqueado</text>
+
+      <path d="M335 100 L430 190" stroke="#333" stroke-width="1.4" fill="none" marker-end="url(#arrow2)"/>
+      <text x="330" y="160" font-size="10.5" fill="#333">Interrupción del temporizador de reloj</text>
+
+      <path d="M440 210 L340 100" stroke="#333" stroke-width="1.4" fill="none" marker-end="url(#arrow2)"/>
+      <text x="420" y="80" font-size="10.5" fill="#333">Lo selecciona el planificador</text>
+
+      <path d="M230 100 L170 190" stroke="#333" stroke-width="1.4" fill="none" marker-end="url(#arrow2)"/>
+      <text x="150" y="150" font-size="10.5" fill="#333">Llama al sistema para</text>
+      <text x="150" y="163" font-size="10.5" fill="#333">esperar un suceso externo</text>
+
+      <path d="M185 240 L415 235" stroke="#333" stroke-width="1.4" fill="none" marker-end="url(#arrow2)"/>
+      <text x="270" y="225" font-size="10.5" fill="#333">Sucede el evento externo</text>
+
+      <defs>
+        <marker id="arrow2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#333"/>
+        </marker>
+      </defs>
+    </svg>
+    <figcaption>Figura 4: Estados de un proceso (Listo, En ejecución, Bloqueado) y las transiciones entre ellos.</figcaption>
+  </figure>
+
+  <h3>5.1.3 Conclusión</h3>
+  <p>La gestión de procesos por parte del sistema operativo incluye la creación, ejecución, suspensión y terminación de procesos, garantizando el uso eficiente de los recursos. Los procesos son unidades aisladas, mientras que los hilos permiten concurrencia dentro de un mismo proceso. La planificación de procesos, junto con el uso de interrupciones de reloj, asegura que todos los procesos reciban tiempo de CPU, manteniendo la estabilidad y el rendimiento del sistema.</p>
+
+  <div class="pill-nav">
+    <a href="index.html">← Volver a Sistemas Operativos 1</a>
+    <a href="#s1">Volver arriba ↑</a>
+  </div>
+
+  <footer class="site-footer">
+    <span>Sistemas Operativos 1 — Unidad 2</span>
+    <span>Portafolio Docente</span>
+  </footer>
+
+</div>
+</body>
+</html>
