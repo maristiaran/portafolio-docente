@@ -405,3 +405,20 @@ footer.site-footer a { color: var(--muted); }
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
 }
+
+/* Tablas anchas (fichas de calidad): se desplazan horizontalmente */
+.table-scroll { overflow-x: auto; margin: 1.25rem 0; }
+.table-scroll table { display: table; min-width: 860px; margin: 0; font-size: .9rem; }
+@media (min-width: 1100px) { .prose .table-scroll { width: calc(var(--wide) - 4rem); } }
+
+pre.prompt {
+  white-space: pre-wrap;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: .86rem;
+  line-height: 1.6;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.15rem;
+  margin: 1rem 0 1.5rem;
+}

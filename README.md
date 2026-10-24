@@ -29,10 +29,13 @@ No hace falta `_config.yml` ni tema Jekyll: el sitio es HTML plano, ya con su pr
 ## Estructura
 
 ```
-index.html                    → portada del portafolio
-assets/style.css               → estilos compartidos
-materias/so1/index.html        → listado de unidades de Sistemas Operativos 1
-materias/so1/unidad2.html      → contenido completo de la Unidad 2
+index.html                       → portada: recorrido B2 y materiales
+assets/style.css                 → estilos compartidos
+assets/insignia1-meme.png        → meme de la Insignia 1
+entradas/01..04-*.html           → entradas del portafolio (una por módulo)
+materias/so1/index.html          → Sistemas Operativos 1
+materias/so1/unidad2.html        → apuntes de la Unidad 2 (CC BY-SA 4.0)
+materias/so1/ruta-unidad2.html   → ruta de aprendizaje (Módulo 1)
 ```
 
 ## Agregar más materias o unidades

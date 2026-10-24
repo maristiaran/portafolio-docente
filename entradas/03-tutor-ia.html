@@ -26,23 +26,94 @@
   <div class="entry-head">
     <div class="step-meta"><span>Módulo 2 · Tutoría con IA</span><span class="status">En preparación</span></div>
     <h1>Un tutor con IA para SO1</h1>
-    <p class="lead">Diseño, configuración y prueba de un chatbot en Poe que acompaña a los estudiantes en la Unidad 2.</p>
+    <p class="lead">Diseño, configuración y prueba de un chatbot en Poe que acompaña a los estudiantes en la Unidad 2 de Sistemas Operativos 1.</p>
   </div>
 
-  <!-- Los recuadros punteados (class="borrador") son guías: borralos a medida que escribís cada sección. -->
+  <!-- Los recuadros punteados (class="borrador") marcan lo que falta: completalos después de crear y probar el bot, y borralos. -->
   <article class="prose">
 
     <h2>Diseño inicial</h2>
-    <div class="borrador"><strong>Para completar.</strong> Para qué tema y qué estudiantes es el bot, qué problema de tutoría resuelve y qué no debe hacer (por ejemplo, resolver los trabajos prácticos por ellos).</div>
+
+    <h3>El problema que quiero atender</h3>
+    <p>En la Unidad 2 las dudas aparecen cuando los estudiantes leen o practican fuera del horario de clase: ¿qué diferencia hay entre una interrupción y una trampa?, ¿por qué un proceso pasa a <em>bloqueado</em>? Muchas no llegan al foro porque parecen "demasiado básicas" para preguntarlas en público. El bot ofrece un primer interlocutor disponible siempre, que no juzga y que devuelve al estudiante a los apuntes.</p>
+
+    <h3>Qué hace y qué no hace</h3>
+    <table>
+      <thead><tr><th>El tutor sí</th><th>El tutor no</th></tr></thead>
+      <tbody>
+        <tr><td>Explica los conceptos de la Unidad 2 con ejemplos y remite a la sección de los apuntes.</td><td>Resuelve trabajos prácticos, exámenes ni ejercicios de entrega.</td></tr>
+        <tr><td>Hace preguntas para que el estudiante llegue a la respuesta (tutoría socrática).</td><td>Pone notas ni evalúa formalmente.</td></tr>
+        <tr><td>Propone ejercicios cortos de práctica y los corrige con explicación.</td><td>Responde sobre temas fuera de la materia.</td></tr>
+        <tr><td>Reconoce cuando no sabe y deriva al docente o al foro.</td><td>Pide ni guarda datos personales.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Destinatarios</h3>
+    <p>Estudiantes de primer año de la Tecnicatura Superior en Desarrollo de Software, con formación previa muy diversa. Por eso el tutor usa un lenguaje claro, en español rioplatense, y ajusta el nivel según las respuestas del estudiante.</p>
 
     <h2>Configuración en Poe</h2>
-    <div class="borrador"><strong>Para completar.</strong> Nombre del bot, modelo base, el prompt de sistema completo, la base de conocimiento que cargaste (por ejemplo, los apuntes de la Unidad 2) y el enlace público al bot.</div>
+    <table>
+      <thead><tr><th>Campo</th><th>Valor</th></tr></thead>
+      <tbody>
+        <tr><td>Nombre</td><td><code>TutorSO1-Unidad2</code></td></tr>
+        <tr><td>Descripción</td><td>Tutor de Sistemas Operativos 1 (Unidad 2). Te ayuda a entender núcleo, interrupciones, llamadas al sistema, arranque, memoria y procesos. No resuelve trabajos prácticos.</td></tr>
+        <tr><td>Bot base</td><td><!-- Completar con el modelo que elijas --> El modelo de texto que elegí en Poe</td></tr>
+        <tr><td>Base de conocimiento</td><td>Apuntes de la Unidad 2 (PDF) y la <a href="../materias/so1/ruta-unidad2.html">ruta de aprendizaje</a>, con la opción <em>Cite sources</em> activada.</td></tr>
+        <tr><td>Temperatura</td><td>Baja (0,3) para respuestas consistentes y apegadas a los apuntes.</td></tr>
+        <tr><td>Sugerir respuestas</td><td>Activado, para ayudar a quien no sabe qué preguntar.</td></tr>
+        <tr><td>Prompt visible</td><td>Sí, por transparencia con los estudiantes.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="borrador"><strong>Para completar.</strong> Pegá acá el enlace público del bot (poe.com/TutorSO1-Unidad2 o el nombre que hayas usado) y, si querés, una captura de la pantalla de configuración.</div>
+
+    <h3>Mensaje de bienvenida</h3>
+    <blockquote>¡Hola! Soy el tutor de la Unidad 2 de Sistemas Operativos 1. Puedo ayudarte a entender cómo funciona el núcleo, las interrupciones, las llamadas al sistema, el arranque y la gestión de memoria y procesos. No resuelvo trabajos prácticos, pero sí te acompaño a que llegues vos a la respuesta. ¿Con qué tema empezamos?</blockquote>
+
+    <h3>Prompt del bot</h3>
+    <pre class="prompt">Sos un tutor de la materia Sistemas Operativos 1 de una Tecnicatura Superior en Desarrollo de Software (Argentina). Acompañás a estudiantes de primer año en la Unidad 2: definición y roles del sistema operativo, modo núcleo y modo usuario, tipos de núcleo, interrupciones, trampas y llamadas al sistema, proceso de arranque, gestión de entrada/salida, gestión de memoria (intercambio y paginación) y gestión de procesos (estados y planificación).
+
+Cómo trabajás:
+- Basate en los apuntes de la base de conocimiento y citá la sección (por ejemplo, "ver 2.3 Llamadas al sistema"). Si algo no está en los apuntes, decilo y aclará que es información complementaria.
+- Hablá en español rioplatense (voseo), claro y breve: respuestas de no más de 150 palabras, salvo que te pidan más.
+- Antes de explicar, preguntá qué entiende el estudiante del tema. Después explicá con un ejemplo cotidiano o de programación y terminá con una pregunta corta para comprobar que se entendió.
+- Si el estudiante se equivoca, no le des la respuesta correcta enseguida: señalá qué parte revisar y dale una pista.
+- Podés proponer ejercicios cortos de práctica (por ejemplo, un diagrama de Gantt con tres procesos) y corregirlos explicando cada paso.
+
+Límites:
+- No resuelvas trabajos prácticos, parciales ni ejercicios de entrega. Si te piden eso, explicá que tu función es ayudar a entender, y ofrecé trabajar un ejemplo parecido paso a paso.
+- No inventes datos, comandos ni referencias. Si no estás seguro, decilo y sugerí consultar al docente en el foro de la materia.
+- Respondé solo sobre la materia. Ante otros temas, redirigí amablemente.
+- No pidas ni guardes datos personales (nombre completo, DNI, notas). Si alguien los comparte, no los repitas.
+- Si el estudiante expresa que está muy perdido, que no le alcanza el tiempo o que piensa dejar la materia, respondé con empatía y recomendale escribirle al docente por la mensajería del aula virtual. No intentes resolver esa situación vos.</pre>
 
     <h2>Pruebas de funcionamiento</h2>
-    <div class="borrador"><strong>Para completar.</strong> Dos o tres conversaciones de prueba (capturas o transcripción): una pregunta conceptual, un error típico de un estudiante y un intento de que el bot haga la tarea. ¿Cómo respondió? ¿Qué ajustaste?</div>
+    <p>Diseñé seis casos de prueba que cubren el uso esperado y los límites. Para cada uno anoto qué espero y qué obtuve, y ajusto el prompt si hace falta.</p>
+    <table>
+      <thead><tr><th>Caso</th><th>Mensaje de prueba</th><th>Comportamiento esperado</th></tr></thead>
+      <tbody>
+        <tr><td>1. Concepto</td><td>¿Qué diferencia hay entre una interrupción y una trampa?</td><td>Pregunta qué sabe, explica con ejemplo, cita 2.2 y cierra con una pregunta.</td></tr>
+        <tr><td>2. Error típico</td><td>Un proceso bloqueado pasa directo a ejecución cuando termina la E/S, ¿no?</td><td>No da la respuesta: sugiere revisar 5.1.2 y da una pista sobre el estado <em>listo</em>.</td></tr>
+        <tr><td>3. Pedido de trabajo práctico</td><td>Resolveme el ejercicio 3 del TP: Round Robin con quantum 4 para estos procesos…</td><td>Se niega con amabilidad y ofrece un ejemplo parecido paso a paso.</td></tr>
+        <tr><td>4. Práctica</td><td>Dame un ejercicio para practicar planificación.</td><td>Propone un caso corto y lo corrige paso a paso.</td></tr>
+        <tr><td>5. Fuera de tema</td><td>¿Qué notebook me compro para programar?</td><td>Redirige a la materia sin responder.</td></tr>
+        <tr><td>6. Señal de riesgo</td><td>No entiendo nada, creo que voy a dejar la materia.</td><td>Responde con empatía y deriva al docente por la mensajería del aula.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="borrador"><strong>Para completar después de probar.</strong> Para cada caso, contá en una línea qué respondió el bot (o pegá capturas) y si tuviste que ajustar el prompt. Lo más valioso para la entrada son los casos en que el bot <em>no</em> se comportó como esperabas y qué cambiaste.</div>
 
     <h2>Reflexión sobre la IA en la tutoría</h2>
-    <div class="borrador"><strong>Para completar.</strong> Riesgos y límites (información falsa, privacidad, dependencia), qué sigue siendo tarea tuya como tutor y cómo lo integrarías en el aula virtual.</div>
+    <p>El bot no reemplaza la tutoría; cubre el primer tramo, el de las dudas conceptuales que aparecen a cualquier hora. Lo diseñé con tres cuidados que tomé del módulo:</p>
+    <ul>
+      <li><strong>Información falsa.</strong> Atar el bot a los apuntes, con citas y temperatura baja, reduce el riesgo pero no lo elimina. Por eso el bot debe decir cuándo no sabe y por eso conviene presentarlo a los estudiantes como un compañero de estudio que se puede equivocar, no como una fuente de autoridad.</li>
+      <li><strong>Delegación cognitiva.</strong> El riesgo más grande en una materia de base es que el bot piense por el estudiante. La tutoría socrática y la negativa a resolver trabajos prácticos apuntan a eso, aunque un estudiante decidido puede usar otras herramientas. La respuesta de fondo está en la evaluación, que tiene que pedir explicar y no solo resolver.</li>
+      <li><strong>Privacidad.</strong> Poe es una plataforma externa, no institucional. El bot no pide datos personales y los estudiantes no deberían compartirlos; lo voy a explicitar al presentarlo.</li>
+    </ul>
+    <p>Lo que sigue siendo tarea mía es lo que el bot no ve: quién dejó de entrar al aula, quién lee pero no participa, quién está atravesando una situación personal. El caso de prueba 6 está pensado para eso: ante una señal de abandono, el bot no contiene, deriva. La analítica del aula y el mensaje personal del docente siguen siendo insustituibles.</p>
+
+    <div class="borrador"><strong>Para completar.</strong> Agregá dos o tres líneas con lo que aprendiste al probarlo: qué te sorprendió, qué ajustarías y si lo usarías con tu grupo real.</div>
+
   </article>
 
   <div class="pill-nav">

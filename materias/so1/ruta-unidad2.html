@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruta de aprendizaje: Unidad 2 — Martin Aristiaran</title>
+<meta name="description" content="Ruta de aprendizaje con recursos abiertos para la Unidad 2 de Sistemas Operativos 1: cómo funciona un sistema operativo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site-header">
+    <a class="brand" href="../../index.html">Martin Aristiaran</a>
+    <nav class="top-nav" aria-label="Principal">
+      <a href="../../index.html#recorrido">Recorrido B2</a>
+      <a href="../../index.html#materiales" aria-current="page">Materiales</a>
+      <a href="https://github.com/maristiaran/portafolio-docente" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <p class="breadcrumb"><a href="../../index.html">Inicio</a> / <a href="index.html">Sistemas Operativos 1</a> / Ruta de la Unidad 2</p>
+
+  <div class="entry-head">
+    <h1>Ruta de aprendizaje: cómo funciona un sistema operativo</h1>
+    <p class="lead">Un recorrido por la Unidad 2 en cuatro tramos. Empezás por el contexto, trabajás los conceptos centrales y, en el punto de control, elegís la rama que más te sirve.</p>
+  </div>
+
+  <div class="prose">
+    <p><strong>Al terminar la ruta vas a poder</strong> explicar qué hace el núcleo cuando un programa pide un recurso, cómo se pasa del encendido de la máquina a un sistema listo para usar, y cómo el sistema operativo reparte la CPU y la memoria entre procesos.</p>
+    <p>Tiempo estimado: entre 6 y 8 horas, repartidas en dos semanas. Los recursos con licencia abierta llevan la etiqueta de su licencia.</p>
+  </div>
+
+  <figure class="diagram" style="max-width:var(--measure)">
+    <svg viewBox="0 0 640 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="mapa-t mapa-d" font-family="Instrument Sans, system-ui, sans-serif">
+      <title id="mapa-t">Mapa de la ruta</title>
+      <desc id="mapa-d">Tramo 1 contexto, tramo 2 conceptos centrales, punto de control, y luego dos ramas: refuerzo y profundización, que se unen en el cierre.</desc>
+      <defs><marker id="fl" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#556070"/></marker></defs>
+      <g font-size="13" fill="#172130">
+        <rect x="10" y="100" width="110" height="50" rx="10" fill="#F3E6EC" stroke="#7B2D4B"/>
+        <text x="65" y="122" text-anchor="middle" font-weight="700">1. Contexto</text>
+        <text x="65" y="139" text-anchor="middle" font-size="11">recurso 1</text>
+        <rect x="150" y="100" width="130" height="50" rx="10" fill="#F3E6EC" stroke="#7B2D4B"/>
+        <text x="215" y="122" text-anchor="middle" font-weight="700">2. Lo central</text>
+        <text x="215" y="139" text-anchor="middle" font-size="11">recursos 2 a 5</text>
+        <polygon points="345,90 395,125 345,160 295,125" fill="#FFFFFF" stroke="#7B2D4B" stroke-width="1.5"/>
+        <text x="345" y="122" text-anchor="middle" font-size="11" font-weight="700">Punto de</text>
+        <text x="345" y="136" text-anchor="middle" font-size="11" font-weight="700">control</text>
+        <rect x="425" y="20" width="130" height="50" rx="10" fill="#FFFFFF" stroke="#556070"/>
+        <text x="490" y="42" text-anchor="middle" font-weight="700">3A. Refuerzo</text>
+        <text x="490" y="59" text-anchor="middle" font-size="11">recursos 6A y 7A</text>
+        <rect x="425" y="180" width="130" height="50" rx="10" fill="#FFFFFF" stroke="#556070"/>
+        <text x="490" y="202" text-anchor="middle" font-weight="700">3B. Profundización</text>
+        <text x="490" y="219" text-anchor="middle" font-size="11">recursos 6B, 7B y 8B</text>
+        <rect x="575" y="100" width="58" height="50" rx="10" fill="#7B2D4B"/>
+        <text x="604" y="130" text-anchor="middle" fill="#FFFFFF" font-weight="700">4. Cierre</text>
+      </g>
+      <g stroke="#556070" stroke-width="1.5" fill="none" marker-end="url(#fl)">
+        <path d="M120 125 H146"/><path d="M280 125 H291"/>
+        <path d="M370 108 L425 52"/><path d="M370 142 L425 198"/>
+        <path d="M555 45 Q580 60 595 98"/><path d="M555 205 Q580 190 595 152"/>
+      </g>
+    </svg>
+    <figcaption>Mapa de la ruta. En el punto de control elegís una rama; las dos terminan en la misma actividad de cierre.</figcaption>
+  </figure>
+
+  <article class="prose">
+
+    <h2>Tramo 1. Contexto: ¿por qué existe un sistema operativo?</h2>
+
+    <h3>1. Operating Systems (Crash Course Computer Science #18)</h3>
+    <p><span class="tag">Video · en inglés</span> <span class="tag">Uso libre en YouTube, todos los derechos reservados</span></p>
+    <p>Un repaso ágil de la historia de los sistemas operativos, desde las tarjetas perforadas hasta Unix, Windows y Android. Miralo con subtítulos y anotá <strong>dos problemas</strong> que obligaron a inventar el sistema operativo.</p>
+    <p><a href="https://thecrashcourse.com/courses/operating-systems-crash-course-computer-science-18/" target="_blank" rel="noopener">Ver el video</a></p>
+
+    <h2>Tramo 2. Lo central: núcleo, interrupciones y procesos</h2>
+
+    <h3>2. Apuntes de cátedra, Unidad 2</h3>
+    <p><span class="tag">Texto con diagramas</span> <span class="tag">CC BY-SA 4.0</span></p>
+    <p>Es el texto base de la unidad. Leé las secciones 1 y 2 (roles del sistema operativo, modo núcleo y modo usuario, interrupciones y llamadas al sistema). Las secciones 3 a 5 las vas a necesitar más adelante.</p>
+    <p><a href="unidad2.html">Leer los apuntes</a></p>
+
+    <h3>3. Infografía: programa, proceso e hilo</h3>
+    <p><span class="tag">Infografía</span> <span class="tag">CC BY-SA 4.0</span></p>
+    <p>Muestra qué pasa cuando un programa guardado en disco se convierte en un proceso con uno o más hilos. Usala para comparar con la sección 5.1.1 de los apuntes: ¿qué agrega la imagen que el texto no muestra?</p>
+    <p><a href="https://commons.wikimedia.org/wiki/File:Program_Process_Thread_Infographic.svg" target="_blank" rel="noopener">Ver la infografía en Wikimedia Commons</a></p>
+
+    <h3>4. Llamadas al sistema (diapositivas, UPV/EHU)</h3>
+    <p><span class="tag">Presentación</span> <span class="tag">Creative Commons</span></p>
+    <p>Diapositivas de Alberto Lafuente (Universidad del País Vasco) que muestran cómo un programa en C pasa de modo usuario a modo protegido a través del vector de interrupciones. Seguí el ejemplo con <code>alarm()</code> y <code>pause()</code> y respondé: ¿en qué momento cambia el modo del procesador?</p>
+    <p><a href="https://ocw.ehu.eus/pluginfile.php/48902/mod_resource/content/13/html/_static/Presentaciones/Llamadas_al_sistema.pdf" target="_blank" rel="noopener">Abrir las diapositivas (PDF)</a></p>
+
+    <h3>5. Process Scheduling Solver</h3>
+    <p><span class="tag">Simulador interactivo · en inglés</span> <span class="tag">Gratuito, sin licencia abierta declarada</span></p>
+    <p>Cargá tres procesos con distintos tiempos de llegada y de ráfaga y compará el diagrama de Gantt con FCFS y con Round Robin (quantum 2). Fijate en qué momentos un proceso pasa de <em>en ejecución</em> a <em>listo</em> y relacionalo con la figura 4 de los apuntes.</p>
+    <p><a href="https://process-scheduling-solver.boonsuen.com/" target="_blank" rel="noopener">Abrir el simulador</a></p>
+
+    <h2>Punto de control</h2>
+    <div class="callout">
+      <p style="margin-top:0">Sin mirar los materiales, intentá explicar por escrito, en no más de diez líneas:</p>
+      <p><em>Un programa ejecuta <code>read()</code> para leer un archivo. ¿Qué pasa desde ese momento hasta que recibe los datos? Nombrá el modo del procesador, la interrupción y los estados del proceso.</em></p>
+      <p style="margin-bottom:0">Si te trabaste en dos o más partes, seguí por la <strong>rama A</strong>. Si pudiste explicarlo completo, seguí por la <strong>rama B</strong>. Podés hacer las dos.</p>
+    </div>
+
+    <h2>Tramo 3A. Refuerzo</h2>
+
+    <h3>6A. Wikipedia: «Llamada al sistema» e «Interrupción»</h3>
+    <p><span class="tag">Artículos enciclopédicos</span> <span class="tag">CC BY-SA 4.0</span></p>
+    <p>Dos artículos breves que explican los mismos conceptos con otras palabras y otros ejemplos. Leelos y armá un glosario de cinco términos con tu propia definición.</p>
+    <p><a href="https://es.wikipedia.org/wiki/Llamada_al_sistema" target="_blank" rel="noopener">Llamada al sistema</a> y <a href="https://es.wikipedia.org/wiki/Interrupci%C3%B3n" target="_blank" rel="noopener">Interrupción</a></p>
+
+    <h3>7A. Volver al simulador con casos guiados</h3>
+    <p>Repetí el recurso 5 con este caso: P1 llega en 0 y dura 5; P2 llega en 1 y dura 3; P3 llega en 2 y dura 1. Antes de ejecutar, dibujá a mano el diagrama de Gantt para Round Robin con quantum 2 y después comparalo con el del simulador.</p>
+
+    <h2>Tramo 3B. Profundización</h2>
+
+    <h3>6B. Fundamentos de sistemas operativos (UNAM)</h3>
+    <p><span class="tag">Libro de texto</span> <span class="tag">CC BY-SA 4.0</span></p>
+    <p>Libro universitario en español de Gunnar Wolf, Esteban Ruiz, Federico Bergero y Erwin Meza (UNAM, 2015). Leé el capítulo 2, <em>Relación con el hardware</em>, y resolvé sus preguntas de autoevaluación. Si querés ir más lejos, el capítulo 5 desarrolla la administración de memoria.</p>
+    <p><a href="https://ru.iiec.unam.mx/2718/" target="_blank" rel="noopener">Descargar el libro</a></p>
+
+    <h3>7B. Página a página: simulador de memoria virtual</h3>
+    <p><span class="tag">Simulador interactivo</span> <span class="tag">Gratuito, sin licencia abierta declarada</span></p>
+    <p>Simulador en español que muestra, paso a paso, cómo una dirección virtual se traduce a física. Hacé el recorrido de <em>Paginación x86</em> con dos direcciones distintas y explicá qué parte de la dirección indica la página y cuál el desplazamiento.</p>
+    <p><a href="https://mendezmariano.github.io/memoria-virtual/" target="_blank" rel="noopener">Abrir el simulador</a></p>
+
+    <h3>8B. Sistema de arranque UEFI (CACIC 2012, UNLP)</h3>
+    <p><span class="tag">Artículo académico</span> <span class="tag">CC BY-NC-SA 2.5 AR</span></p>
+    <p>Artículo de docentes de la Facultad de Informática de la UNLP que compara el arranque con BIOS y con UEFI y discute Secure Boot. Leé las secciones sobre BIOS y UEFI y ubicá cada paso en la sección 3 de los apuntes.</p>
+    <p><a href="http://sedici.unlp.edu.ar/handle/10915/23763" target="_blank" rel="noopener">Leer el artículo en SEDICI</a></p>
+
+    <h2>Tramo 4. Cierre</h2>
+    <p>Elegí una acción cotidiana (abrir una foto, guardar un documento o abrir una pestaña del navegador) y contá, en un texto o un esquema, qué hace el sistema operativo desde que tocás la tecla hasta que ves el resultado. Tiene que aparecer al menos una interrupción, una llamada al sistema, un cambio de estado de un proceso y un acceso a memoria. Lo compartimos en el foro de la unidad.</p>
+
+  </article>
+
+  <div class="pill-nav">
+    <a href="index.html">← Sistemas Operativos 1</a>
+    <a href="../../entradas/02-ecosistema-curado.html">Cómo armé esta ruta</a>
+  </div>
+
+  <footer class="site-footer">
+    <span>Ruta de aprendizaje de la Unidad 2 · <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.es">CC BY-SA 4.0</a></span>
+    <span>Martin Aristiaran · Portafolio docente</span>
+  </footer>
+
+</div>
+</body>
+</html>
