@@ -3,42 +3,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portafolio Docente</title>
-<meta name="description" content="Portafolio docente: materiales, apuntes y recursos para las asignaturas dictadas.">
+<title>Martin Aristiaran — Portafolio docente</title>
+<meta name="description" content="Portafolio docente de Martin Aristiaran: recorrido del curso Competencia digital docente B2 y materiales de cátedra de Sistemas Operativos 1.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 <div class="wrap">
 
   <header class="site-header">
-    <a class="brand" href="index.html">Portafolio Docente</a>
-    <nav class="top-nav">
-      <a href="materias/so1/index.html">Materias</a>
+    <a class="brand" href="index.html">Martin Aristiaran</a>
+    <nav class="top-nav" aria-label="Principal">
+      <a href="#recorrido">Recorrido B2</a>
+      <a href="#materiales">Materiales</a>
       <a href="https://github.com/maristiaran/portafolio-docente" target="_blank" rel="noopener">GitHub</a>
     </nav>
   </header>
 
-  <h1>Portafolio Docente</h1>
-  <p class="lead">Materiales, apuntes y recursos organizados por asignatura, publicados como sitio web a partir de este repositorio.</p>
-
-  <h2>Materias</h2>
-  <div class="grid">
-    <div class="card">
-      <a class="card-link" href="materias/so1/index.html">
-        <span class="tag">Nivel Superior</span>
-        <h3>Sistemas Operativos 1</h3>
-        <p>Apuntes de cátedra organizados por unidad. Disponible: Unidad 2 — Funcionamiento de un Sistema Operativo.</p>
-      </a>
+  <section class="hero">
+    <div>
+      <h1>Portafolio docente</h1>
+      <p class="role">Martin Aristiaran, docente de Sistemas Operativos 1 en la Tecnicatura Superior en Desarrollo de Software.</p>
+      <p>Acá registro mi recorrido por el curso <em>Competencia digital docente experto (B2): IA aplicada al diseño, la evaluación y la gestión de entornos digitales</em>, y publico los materiales que uso con mis estudiantes.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#recorrido">Ver el recorrido</a>
+        <a class="btn btn-ghost" href="materias/so1/index.html">Apuntes de SO1</a>
+      </div>
     </div>
-  </div>
+    <aside class="hero-aside" aria-label="Datos del curso">
+      <dl>
+        <dt>Curso</dt>
+        <dd>C015 · Competencias pedagógicas digitales docentes, Nivel B2. Dirección de Educación Superior, DGE Mendoza.</dd>
+        <dt>Marcos de referencia</dt>
+        <dd>e-DigCompEdu (2026) y Marco de Competencias en IA para Docentes de la UNESCO.</dd>
+        <dt>Punto de partida</dt>
+        <dd><!-- Reemplazá el # por el enlace a tu portafolio del Nivel B1 -->
+          <a href="#">Mi portafolio del Nivel B1</a></dd>
+      </dl>
+    </aside>
+  </section>
 
-  <div class="callout">
-    Este portafolio se irá ampliando con más materias y unidades a medida que se sumen nuevos apuntes.
-  </div>
+  <section id="recorrido">
+    <h2>Recorrido B2</h2>
+    <p class="section-intro">Cada módulo del curso deja una evidencia. Las entradas están en el orden en que las fui construyendo.</p>
+
+    <!-- Cuando termines una entrada: cambiá class="" por class="is-done" en el <li>
+         y el estado por <span class="status done">Publicada</span> -->
+    <ol class="timeline">
+      <li>
+        <span class="node" aria-hidden="true"></span>
+        <article class="step">
+          <div class="step-meta"><span>Inicio del curso</span><span class="status">En preparación</span></div>
+          <h3><a href="entradas/01-autoevaluacion.html">Autoevaluación de mis competencias digitales</a></h3>
+          <p>Qué mostró el cuestionario de autoevaluación, dónde me encuentro respecto del Nivel B1 y qué quiero fortalecer en este recorrido.</p>
+        </article>
+      </li>
+      <li>
+        <span class="node" aria-hidden="true"></span>
+        <article class="step">
+          <div class="step-meta"><span>Módulo 1 · Curaduría digital avanzada</span><span class="status">En preparación</span></div>
+          <h3><a href="entradas/02-ecosistema-curado.html">Ruta de aprendizaje: cómo funciona un sistema operativo</a></h3>
+          <p>Un ecosistema de recursos abiertos y curados para la Unidad 2 de SO1, con notas docentes, licencias y fichas de calidad.</p>
+        </article>
+      </li>
+      <li>
+        <span class="node" aria-hidden="true"></span>
+        <article class="step">
+          <div class="step-meta"><span>Módulo 2 · Tutoría con IA</span><span class="status">En preparación</span></div>
+          <h3><a href="entradas/03-tutor-ia.html">Un tutor con IA para SO1</a></h3>
+          <p>Diseño, configuración y prueba de un chatbot en Poe que acompaña a los estudiantes en la Unidad 2.</p>
+        </article>
+      </li>
+      <li>
+        <span class="node" aria-hidden="true"></span>
+        <article class="step">
+          <div class="step-meta"><span>Módulo 3 · Evaluación avanzada</span><span class="status">En preparación</span></div>
+          <h3><a href="entradas/04-evaluacion.html">Evaluar en tiempos de IA</a></h3>
+          <p>Evaluación auténtica, retroalimentación e integridad académica aplicadas a una instancia de evaluación de SO1.</p>
+        </article>
+      </li>
+    </ol>
+  </section>
+
+  <section id="materiales">
+    <h2>Materiales de cátedra</h2>
+    <div class="grid">
+      <div class="card">
+        <a class="card-link" href="materias/so1/index.html">
+          <span class="tag">Tecnicatura Superior</span>
+          <h3>Sistemas Operativos 1</h3>
+          <p>Apuntes por unidad. Disponible: Unidad 2, funcionamiento de un sistema operativo.</p>
+        </a>
+      </div>
+    </div>
+  </section>
 
   <footer class="site-footer">
-    <span>Portafolio Docente</span>
-    <span>Publicado con GitHub Pages</span>
+    <span>Martin Aristiaran · Portafolio docente</span>
+    <span>Publicado con <a href="https://pages.github.com/">GitHub Pages</a></span>
   </footer>
 
 </div>
