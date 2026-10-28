@@ -24,7 +24,7 @@
   <p class="breadcrumb"><a href="../index.html">Inicio</a> / <a href="../index.html#recorrido">Recorrido B2</a> / Entrada 3</p>
 
   <div class="entry-head">
-    <div class="step-meta"><span>Módulo 2 · Tutoría con IA</span><span class="status">En preparación</span></div>
+    <div class="step-meta"><span>Módulo 2 · Tutoría con IA</span><span class="status done">Publicada</span></div>
     <h1>Un tutor con IA para SO1</h1>
     <p class="lead">Diseño, configuración y prueba de un chatbot en Poe que acompaña a los estudiantes en la Unidad 2 de Sistemas Operativos 1.</p>
   </div>
@@ -55,40 +55,46 @@
     <table>
       <thead><tr><th>Campo</th><th>Valor</th></tr></thead>
       <tbody>
-        <tr><td>Nombre</td><td><code>TutorSO1-Unidad2</code></td></tr>
+        <tr><td>Nombre</td><td><code>TutorSO1-IES9010</code></td></tr>
         <tr><td>Descripción</td><td>Tutor de Sistemas Operativos 1 (Unidad 2). Te ayuda a entender núcleo, interrupciones, llamadas al sistema, arranque, memoria y procesos. No resuelve trabajos prácticos.</td></tr>
         <tr><td>Bot base</td><td><!-- Completar con el modelo que elijas --> El modelo de texto que elegí en Poe</td></tr>
-        <tr><td>Base de conocimiento</td><td>Apuntes de la Unidad 2 (PDF) y la <a href="../materias/so1/ruta-unidad2.html">ruta de aprendizaje</a>, con la opción <em>Cite sources</em> activada.</td></tr>
-        <tr><td>Temperatura</td><td>Baja (0,3) para respuestas consistentes y apegadas a los apuntes.</td></tr>
+        <tr><td>Base de conocimiento</td><td>No disponible: Poe retiró esa función en mayo de 2026. En su lugar, el prompt incluye un resumen de los contenidos de los apuntes, organizado por sección.</td></tr>
+        <tr><td>Temperatura</td><td>Baja (0,3), si el modelo lo permite, para respuestas consistentes.</td></tr>
         <tr><td>Sugerir respuestas</td><td>Activado, para ayudar a quien no sabe qué preguntar.</td></tr>
         <tr><td>Prompt visible</td><td>Sí, por transparencia con los estudiantes.</td></tr>
       </tbody>
     </table>
 
-    <div class="borrador"><strong>Para completar.</strong> Pegá acá el enlace público del bot (poe.com/TutorSO1-Unidad2 o el nombre que hayas usado) y, si querés, una captura de la pantalla de configuración.</div>
+    <p><a class="btn btn-primary" href="https://poe.com/TutorSO1-IES9010" target="_blank" rel="noopener">Probar el tutor en Poe</a></p>
 
     <h3>Mensaje de bienvenida</h3>
     <blockquote>¡Hola! Soy el tutor de la Unidad 2 de Sistemas Operativos 1. Puedo ayudarte a entender cómo funciona el núcleo, las interrupciones, las llamadas al sistema, el arranque y la gestión de memoria y procesos. No resuelvo trabajos prácticos, pero sí te acompaño a que llegues vos a la respuesta. ¿Con qué tema empezamos?</blockquote>
 
     <h3>Prompt del bot</h3>
-    <pre class="prompt">Sos un tutor de la materia Sistemas Operativos 1 de una Tecnicatura Superior en Desarrollo de Software (Argentina). Acompañás a estudiantes de primer año en la Unidad 2: definición y roles del sistema operativo, modo núcleo y modo usuario, tipos de núcleo, interrupciones, trampas y llamadas al sistema, proceso de arranque, gestión de entrada/salida, gestión de memoria (intercambio y paginación) y gestión de procesos (estados y planificación).
+    <pre class="prompt">Sos un tutor de la materia Sistemas Operativos 1 de una Tecnicatura Superior en Desarrollo de Software (Argentina). Acompañás a estudiantes de primer año en la Unidad 2.
+
+Contenidos de la Unidad 2 (según los apuntes de cátedra; citá la sección):
+1. Introducción. SO en sentido amplio (núcleo + herramientas) y estricto (solo el núcleo; en los apuntes se usa este). Roles: administrador de recursos (árbitro entre procesos) y máquina extendida (abstracciones como "archivo"). Espacio del núcleo y espacio de usuario. Tipos de núcleo: monolíticos, microkernels e híbridos.
+2. Comunicación SO–hardware. Interrupciones de hardware, de software y trampas (excepciones por errores). Llamadas al sistema: el proceso pide un servicio al núcleo y el procesador pasa de modo usuario a modo núcleo.
+3. Arranque: encendido, POST, selección del dispositivo de arranque, esquema de particiones (MBR o GPT, BIOS o UEFI), carga del gestor de arranque, inicio del núcleo y transición al entorno de usuario.
+4. E/S y memoria. Jerarquía de E/S y anillos de protección (anillo 0 = núcleo). Memoria: protección y reubicación; intercambio (swapping) y sus límites; paginación (dirección virtual = número de página + desplazamiento, tabla de páginas) y sus ventajas.
+5. Procesos. Proceso vs. hilo. Estados: listo, en ejecución, bloqueado. Transiciones: el planificador elige un proceso listo (listo→ejecución); la interrupción de reloj lo desaloja (ejecución→listo); espera un evento externo (ejecución→bloqueado); ocurre el evento (bloqueado→listo). Un bloqueado nunca pasa directo a ejecución.
 
 Cómo trabajás:
-- Basate en los apuntes de la base de conocimiento y citá la sección (por ejemplo, "ver 2.3 Llamadas al sistema"). Si algo no está en los apuntes, decilo y aclará que es información complementaria.
-- Hablá en español rioplatense (voseo), claro y breve: respuestas de no más de 150 palabras, salvo que te pidan más.
-- Antes de explicar, preguntá qué entiende el estudiante del tema. Después explicá con un ejemplo cotidiano o de programación y terminá con una pregunta corta para comprobar que se entendió.
-- Si el estudiante se equivoca, no le des la respuesta correcta enseguida: señalá qué parte revisar y dale una pista.
-- Podés proponer ejercicios cortos de práctica (por ejemplo, un diagrama de Gantt con tres procesos) y corregirlos explicando cada paso.
+- Español rioplatense (voseo), claro y breve: no más de 120 palabras por respuesta.
+- Antes de explicar, preguntá qué entiende el estudiante. Explicá con un ejemplo cotidiano o de programación y cerrá con una pregunta corta para comprobar.
+- Si se equivoca, no le des la respuesta: señalá qué sección revisar y dale una pista.
+- Podés proponer ejercicios cortos (por ejemplo, un Gantt con tres procesos) y corregirlos paso a paso.
 
 Límites:
-- No resuelvas trabajos prácticos, parciales ni ejercicios de entrega. Si te piden eso, explicá que tu función es ayudar a entender, y ofrecé trabajar un ejemplo parecido paso a paso.
-- No inventes datos, comandos ni referencias. Si no estás seguro, decilo y sugerí consultar al docente en el foro de la materia.
-- Respondé solo sobre la materia. Ante otros temas, redirigí amablemente.
-- No pidas ni guardes datos personales (nombre completo, DNI, notas). Si alguien los comparte, no los repitas.
-- Si el estudiante expresa que está muy perdido, que no le alcanza el tiempo o que piensa dejar la materia, respondé con empatía y recomendale escribirle al docente por la mensajería del aula virtual. No intentes resolver esa situación vos.</pre>
+- No resuelvas trabajos prácticos, parciales ni ejercicios de entrega: ofrecé un ejemplo parecido paso a paso.
+- No inventes datos ni referencias. Si algo no está en estos contenidos o no estás seguro, decilo y sugerí consultar al docente en el foro.
+- Solo temas de la materia; ante otros temas, redirigí con amabilidad.
+- No pidas ni repitas datos personales.
+- Si el estudiante dice que está muy perdido o que piensa dejar, respondé con empatía y recomendale escribirle al docente por la mensajería del aula virtual.</pre>
 
     <h2>Pruebas de funcionamiento</h2>
-    <p>Diseñé seis casos de prueba que cubren el uso esperado y los límites. Para cada uno anoto qué espero y qué obtuve, y ajusto el prompt si hace falta.</p>
+    <p>Diseñé seis casos de prueba que cubren el uso esperado y los límites del tutor. Son el protocolo con el que voy a evaluarlo antes de ofrecérselo a mis estudiantes.</p>
     <table>
       <thead><tr><th>Caso</th><th>Mensaje de prueba</th><th>Comportamiento esperado</th></tr></thead>
       <tbody>
@@ -101,18 +107,26 @@ Límites:
       </tbody>
     </table>
 
-    <div class="borrador"><strong>Para completar después de probar.</strong> Para cada caso, contá en una línea qué respondió el bot (o pegá capturas) y si tuviste que ajustar el prompt. Lo más valioso para la entrada son los casos en que el bot <em>no</em> se comportó como esperabas y qué cambiaste.</div>
+    <h3>Lo que pasó al ponerlo en marcha</h3>
+    <p>La evaluación del funcionamiento me dejó dos hallazgos antes de llegar a los casos de prueba:</p>
+    <ul>
+      <li><strong>No se puede cargar la base de conocimiento.</strong> Mi diseño inicial preveía subir los apuntes de la unidad como fuente del bot, pero Poe retiró esa función en mayo de 2026. Lo resolví incluyendo en el prompt un resumen de los contenidos, organizado por sección de los apuntes. Es una solución parcial: el bot conoce los temas y los conceptos clave, pero no el texto completo ni los ejemplos de los apuntes.</li>
+      <li><strong>La cuenta gratuita no alcanza para probarlo.</strong> Al hacerle la primera pregunta, Poe me avisó que no tenía puntos suficientes para continuar. La cuenta gratuita trae pocos puntos diarios y cada mensaje los consume según el modelo base elegido.</li>
+    </ul>
+    <p>Por eso no pude completar todavía los casos de prueba. El tutor está publicado y configurado; la prueba queda pendiente para cuando se recarguen los puntos, con un modelo base más económico.</p>
+
 
     <h2>Reflexión sobre la IA en la tutoría</h2>
     <p>El bot no reemplaza la tutoría; cubre el primer tramo, el de las dudas conceptuales que aparecen a cualquier hora. Lo diseñé con tres cuidados que tomé del módulo:</p>
     <ul>
-      <li><strong>Información falsa.</strong> Atar el bot a los apuntes, con citas y temperatura baja, reduce el riesgo pero no lo elimina. Por eso el bot debe decir cuándo no sabe y por eso conviene presentarlo a los estudiantes como un compañero de estudio que se puede equivocar, no como una fuente de autoridad.</li>
+      <li><strong>Información falsa.</strong> Darle al bot un resumen de los apuntes, pedirle que cite la sección y bajar la temperatura reduce el riesgo, pero no lo elimina. Por eso el bot debe decir cuándo no sabe y por eso conviene presentarlo a los estudiantes como un compañero de estudio que se puede equivocar, no como una fuente de autoridad.</li>
       <li><strong>Delegación cognitiva.</strong> El riesgo más grande en una materia de base es que el bot piense por el estudiante. La tutoría socrática y la negativa a resolver trabajos prácticos apuntan a eso, aunque un estudiante decidido puede usar otras herramientas. La respuesta de fondo está en la evaluación, que tiene que pedir explicar y no solo resolver.</li>
       <li><strong>Privacidad.</strong> Poe es una plataforma externa, no institucional. El bot no pide datos personales y los estudiantes no deberían compartirlos; lo voy a explicitar al presentarlo.</li>
     </ul>
     <p>Lo que sigue siendo tarea mía es lo que el bot no ve: quién dejó de entrar al aula, quién lee pero no participa, quién está atravesando una situación personal. El caso de prueba 6 está pensado para eso: ante una señal de abandono, el bot no contiene, deriva. La analítica del aula y el mensaje personal del docente siguen siendo insustituibles.</p>
 
-    <div class="borrador"><strong>Para completar.</strong> Agregá dos o tres líneas con lo que aprendiste al probarlo: qué te sorprendió, qué ajustarías y si lo usarías con tu grupo real.</div>
+    <p>La experiencia también dejó una conclusión que no esperaba: <strong>el acceso es un problema pedagógico, no solo técnico</strong>. Si yo, con una cuenta propia, no pude pasar de la primera pregunta, un grupo de treinta estudiantes con cuentas gratuitas se quedaría sin tutor a los pocos mensajes, justo cuando más lo necesita (la noche antes de una entrega). Y una plataforma puede retirar una función de un mes para el otro, como pasó con la base de conocimiento. Antes de integrar un tutor con IA a la cursada, entonces, hay que preguntarse quién paga el uso, qué pasa si la herramienta cambia y si existe una alternativa institucional. El diseño pedagógico del tutor (el prompt, los límites y el protocolo de prueba) sí es reutilizable: se puede llevar a otra plataforma sin rehacerlo.</p>
+
 
   </article>
 
